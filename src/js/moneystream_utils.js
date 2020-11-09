@@ -38,9 +38,6 @@ export async function stopMonetization () {
 export async function checkExtension () {
     const isFirefox = typeof InstallTrigger !== 'undefined'
     const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
-    // console.log(`firefox ${isFirefox}`)
-    // console.log(`chrome ${isChrome}`)
-    // available_xtn.forEach(x => {
     const payload = {command: "info"}
     console.log(payload)
     sendMessageExtension(payload)

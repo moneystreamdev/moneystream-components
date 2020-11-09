@@ -20,6 +20,7 @@ export const config: Config = {
       type: 'www',
       serviceWorker: null, // disable service workers
       copy: [
+        { src: 'wmreverse.html', dest: 'wmreverse.html' },
         { src: 'fonts', dest: 'build' },
         { src: 'js', dest: 'build' }
       ]

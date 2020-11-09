@@ -6,7 +6,7 @@
     <title>MoneyStream Components</title>
     <script type="module" src="/build/moneystream-components.esm.js"></script>
     <script nomodule src="/build/moneystream-components.js"></script>
-    <script src="/build/moneystream_utils.js"></script>
+    <!-- <script src="/build/moneystream_utils.js"></script> -->
     <style type="text/css">
       @font-face {
         font-family: 'technikusregular';
@@ -16,10 +16,51 @@
         font-style: normal;
       }
     </style>
+
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
+    <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
+    <script>
+      let player = null
+
+      document.addEventListener('DOMContentLoaded', (event) => {
+        makePlayer()
+        //moneystreamVideo.whenLoaded()
+      })
+
+    </script>
+
   </head>
   <body>
     <!-- <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component> -->
-    <moneystream-dash debug="true" show-controls="true">      
+    <moneystream-dash debug="false" show-controls="true">
     </moneystream-dash>
+    <!-- <moneystream-video id="moneystreamVideo"></moneystream-video> -->
+
+    <div class="colvids" style="background-color:white;">
+      <div id="player" 
+        data-plyr-provider="youtube" 
+        data-plyr-embed-id="qB6I9Zk-7zY"
+      ></div>
+    </div>
+
+    <script>
+
+      function makePlayer() {
+        // 2. This code loads the IFrame Player API code asynchronously.
+        // var tag = document.createElement('script');
+        // tag.src = "https://www.youtube.com/iframe_api";
+        // var firstScriptTag = document.getElementsByTagName('script')[0];
+        // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        player = new Plyr('#player', {
+          autoplay:true,
+          ratio:'16:9',
+          youtube: {noCookie:true},
+        })
+        //player.on('statechange', onPlayerStateChange)
+        player.poster = 'https://images.unsplash.com/photo-1533069027836-fa937181a8ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
+      }
+
+    </script>
+
   </body>
 </html>

@@ -10,6 +10,8 @@ export namespace Components {
         "debug": boolean;
         "showControls": boolean;
     }
+    interface MoneystreamVideo {
+    }
     interface MyComponent {
         /**
           * The first name
@@ -32,6 +34,12 @@ declare global {
         prototype: HTMLMoneystreamDashElement;
         new (): HTMLMoneystreamDashElement;
     };
+    interface HTMLMoneystreamVideoElement extends Components.MoneystreamVideo, HTMLStencilElement {
+    }
+    var HTMLMoneystreamVideoElement: {
+        prototype: HTMLMoneystreamVideoElement;
+        new (): HTMLMoneystreamVideoElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -40,6 +48,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "moneystream-dash": HTMLMoneystreamDashElement;
+        "moneystream-video": HTMLMoneystreamVideoElement;
         "my-component": HTMLMyComponentElement;
     }
 }
@@ -47,6 +56,8 @@ declare namespace LocalJSX {
     interface MoneystreamDash {
         "debug"?: boolean;
         "showControls"?: boolean;
+    }
+    interface MoneystreamVideo {
     }
     interface MyComponent {
         /**
@@ -64,6 +75,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "moneystream-dash": MoneystreamDash;
+        "moneystream-video": MoneystreamVideo;
         "my-component": MyComponent;
     }
 }
@@ -72,6 +84,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "moneystream-dash": LocalJSX.MoneystreamDash & JSXBase.HTMLAttributes<HTMLMoneystreamDashElement>;
+            "moneystream-video": LocalJSX.MoneystreamVideo & JSXBase.HTMLAttributes<HTMLMoneystreamVideoElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }

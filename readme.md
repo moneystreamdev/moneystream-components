@@ -3,6 +3,26 @@
 # MoneyStream Web Components
 A component library for MoneyStream web components
 
+To view the published files for this component see https://unpkg.com/moneystream-components/  
+
+To use this component:
+```
+    <style type="text/css">
+      @font-face {
+        font-family: 'technikusregular';
+        src: url('https://unpkg.com/moneystream-components/dist/moneystream-components/moneystream-components/technikus-regular-webfont.woff2') format('woff2'),
+            url('https://unpkg.com/moneystream-components/dist/moneystream-components/moneystream-components/technikus-regular-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <script type="module" src="https://unpkg.com/moneystream-components/dist/moneystream-components/moneystream-components.esm.js"></script>
+
+    <moneystream-dash debug="true" show-controls="true">
+    </moneystream-dash>
+```
+
 ## Stencil Component Starter
 
 This is a starter project for building a standalone Web Component using Stencil.
