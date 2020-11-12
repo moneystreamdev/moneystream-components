@@ -43,14 +43,14 @@ export async function checkExtension () {
     sendMessageExtension(payload)
 }
 
-async function getExchange()  {
+export async function getExchange()  {
     const url = 'https://cash.bitcoinofthings.com/exchange'
     const response = await fetch(url)
     const result = await response.json()
     return result
 }
 
-function convertSatoshisToUsd(satoshis, exchange) {
+export function convertSatoshisToUsd(satoshis, exchange) {
     if (!exchange) return satoshis
     if (!satoshis) return 0
     const dollarsPerBitcoin = exchange.data.rate

@@ -9,11 +9,15 @@
   background-color: black;
 }
 
+.right {
+  text-align:right;
+}
+
 .colvids {
   /* float: left;
   width: 50%;
   padding: 10px; */
   /* height: 300px; */
   margin: 20px auto;
-  max-width: 400px;
+  max-width: 500px;
 }

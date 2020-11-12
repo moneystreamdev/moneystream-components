@@ -9,16 +9,8 @@ export class MoneystreamVideo {
   private player!: HTMLVimePlayerElement
   private moneystream!: any
   @State() videoMessage: string = ''
-  @Prop() videoId
-
-  // connectedCallback() {
-  //   console.log(`will load`)
-  //   // document.addEventListener('DOMContentLoaded', () => {
-  //   //   console.log(`loaded`)
-  //     this.makePlayer()
-  //     this.playVideo()
-  //   // })
-  // }
+  // required to be set on the instance
+  @Prop() vid: string = undefined
 
   private onPlayingChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
@@ -43,18 +35,21 @@ export class MoneystreamVideo {
   render() {
     return (
       <Host>
-        <moneystream-dash id="moneystream"
-        ref={(el) => { this.moneystream = el }}
-        ></moneystream-dash>
           <div class="colvids">
-            {this.videoMessage}
-            <vime-player controls
-              onVPlayingChange={this.onPlayingChange.bind(this)}
-              onVPausedChange={this.onPausedChange.bind(this)}
-              ref={(el) => { this.player = el }}
-            >
-              <vime-youtube videoId="DyTCOwB0DVw" />
-            </vime-player>
+            <div class="right">
+              <moneystream-dash id="moneystream"
+              ref={(el) => { this.moneystream = el }}
+              ></moneystream-dash>
+            </div>
+            <div>
+              <vime-player controls
+                onVPlayingChange={this.onPlayingChange.bind(this)}
+                onVPausedChange={this.onPausedChange.bind(this)}
+                ref={(el) => { this.player = el }}
+              >
+                <vime-youtube videoId={this.vid} />
+              </vime-player>
+            </div>
           </div>
       </Host>
     )

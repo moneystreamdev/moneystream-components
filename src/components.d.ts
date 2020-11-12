@@ -13,7 +13,7 @@ export namespace Components {
         "stop": () => Promise<void>;
     }
     interface MoneystreamVideo {
-        "videoId": any;
+        "vid": string;
     }
     interface MyComponent {
         /**
@@ -61,7 +61,7 @@ declare namespace LocalJSX {
         "showControls"?: boolean;
     }
     interface MoneystreamVideo {
-        "videoId"?: any;
+        "vid"?: string;
     }
     interface MyComponent {
         /**
