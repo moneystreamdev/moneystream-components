@@ -38,22 +38,19 @@ export async function stopMonetization () {
 export async function checkExtension () {
     const isFirefox = typeof InstallTrigger !== 'undefined'
     const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
-    // console.log(`firefox ${isFirefox}`)
-    // console.log(`chrome ${isChrome}`)
-    // available_xtn.forEach(x => {
     const payload = {command: "info"}
     console.log(payload)
     sendMessageExtension(payload)
 }
 
-async function getExchange()  {
+export async function getExchange()  {
     const url = 'https://cash.bitcoinofthings.com/exchange'
     const response = await fetch(url)
     const result = await response.json()
     return result
 }
 
-function convertSatoshisToUsd(satoshis, exchange) {
+export function convertSatoshisToUsd(satoshis, exchange) {
     if (!exchange) return satoshis
     if (!satoshis) return 0
     const dollarsPerBitcoin = exchange.data.rate

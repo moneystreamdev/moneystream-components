@@ -1,0 +1,524 @@
+<head>
+    <!-- <meta name="monetization" content="1KUrv2Ns8SwNkLgVKrVbSHJmdXLpsEvaDf"> -->
+    <title>MoneyStream reverse metering example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
+
+  <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      .colvids {
+        /* float: left;
+        width: 50%;
+        padding: 10px; */
+        /* height: 300px; */
+        margin: 20px auto;
+        max-width: 400px;
+      }
+
+      .plyr {
+        border-radius: 10px;
+      }
+      
+      .rowvids {
+        padding: 1px;
+      }
+      /* Clear floats after the columns */
+      .rowvids:after {
+        content: "";
+        display: table;
+        clear: both;
+        /* width: 500px; */
+      }
+      .vidcontainer {
+        width:650px;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      fieldset {margin:0;padding:0;border:solid}
+
+      .moneycounter {font-size: 16pt;}
+
+    </style>
+
+    <script src="utils.js"></script>
+
+    <script>
+        let payTo = ""
+
+        // localhost development
+        const extensionId_LocalTesting = 'dnokejphlpljkikgfgmaiojlohadfdgo'
+        // extension id in chrome store
+        const extensionId_InStore = 'ggdmhmaklbcaeeolnppfehjkkihhnkfe'
+
+        chrome.runtime.sendMessage(
+          extensionId_InStore,
+          {command: "info"}, 
+          response => {
+            if (!chrome.runtime.lastError) {
+              console.log(response)
+              if (response && response.address) {
+                payTo = response.address
+                document.getElementById('payoutaddress').value = payTo
+              }
+            } else {
+
+              chrome.runtime.sendMessage(
+              extensionId_LocalTesting,
+              {command: "info"}, 
+              response => {
+                if (!chrome.runtime.lastError) {
+                  console.log(response)
+                  if (response && response.address) {
+                    payTo = response.address
+                    document.getElementById('payoutaddress').value = payTo
+                  }
+                } else {
+                }
+              })
+
+            }
+        })
+
+
+    </script>
+
+  </head>
+  
+  <body>
+    <div class="container">
+
+      <div class="row mt-3">
+        <div class="card m-1 p-1">
+          <legend>Step 
+            <span style="font-size:16pt">&#9312;</span> 
+            enter your paymail address
+            <a href="https://blog.moneybutton.com/2019/05/31/introducing-paymail-an-extensible-identity-protocol-for-bitcoin-bsv/" target="_blank"> 
+              <i class="fa fa-question-circle"></i>
+            </a>
+          </legend>
+      
+            <div class="card-body mb-3">
+                <div class="column">
+                    <input id="payoutaddress" type="email" 
+                    placeholder="your paymail or BSV address"
+                    required value=""
+                    size="45"
+                  />
+                  <button id="submit-paymail" class="btn" >Start Watching</button>
+              </div>
+      </div>
+
+      <div class="hide">
+        <button id="stop-button" class="btn" disabled>Stop Watching</button>
+        <button id="start-button" class="btn" >Start Watching</button>
+      </div>
+
+        </div>
+      </div>
+
+      <div class="row mt-1">
+        <div class="col-sm-4" id="loading">
+          <div id="monetizationIcon">
+            <i id="monicon"
+              class="fa fa-stop-circle" 
+              style="font-size:36px; color:red"
+              title="stopped"
+            ></i>
+          </div>
+          <span id="state"></span>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <span id="total" class="moneycounter">nothing yet</span>
+          <span id="currency" class="moneycounter"></span>
+        </div>
+        <div class="col-sm-4 mb-3"></div>
+      </div>
+
+      <div class="row mt-1">
+        <div id="cardpayout" class="card border-0 hide">
+          <div id="divPayout" class="mb-1">
+            <span id="payout"></span>
+            <a id="receiptLink" href="https://whatsonchain.com/tx/txid" target="_blank"> 
+              <i 
+                class="fa fa-receipt"
+                style="font-size:20px; color:green"
+              ></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-1">
+        <div class="card m-1 p-1 vidcontainer">
+          <legend>Step <span style="font-size:16pt">&#9313;</span>. Play the video</legend>
+
+        <div class="card-body rowvids">
+          <div class="colvids" style="background-color:white;">
+            <div id="player" 
+              data-plyr-provider="youtube" 
+              data-plyr-embed-id="qB6I9Zk-7zY"
+            ></div>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+        const isLocal = false
+        let faucet_url = `https://cash.bitcoinofthings.com/faucet/`
+        if (isLocal) {
+          faucet_url = `http://localhost:9900/faucet/`
+          payTo = "fullcycle@moneybutton.com"
+        }
+        const MAX_SPEND = 5500
+        const FEE = 800
+        const SAT_PER_CENT = 5000
+        let sessionId = null
+        let total = 0
+        let sendAmount = 0
+        let scale
+        let monetizationState = null
+  
+        function showMonetizationState (newState) {
+          console.log(newState)
+          let icon = 'question'
+          let color = 'grey'
+          if (newState == "stopped") {
+            icon = "stop-circle"
+            color = 'grey'
+          }
+          if (newState === "starting") {
+            icon = "play-circle"
+            color = "grey"
+          }
+          if (newState === "pending") {
+            icon = "play-circle"
+            color = "green"
+          }
+          if (newState === "monetizing") {
+            icon = "dollar-sign"
+            color = "green"
+          }
+          if (newState === "failure") {
+            icon = "times-circle"
+            color = "red"
+          }
+          if (newState == "success") {
+            icon = "thumbs-up"
+            color = "green"
+          }
+          if (icon) {
+            if (monetizationState != null
+              && monetizationState != newState) {
+                const monIcon = document.querySelector("#monicon")
+                monIcon.className = `fa fa-${icon}`
+                monIcon.style.color = `${color}`
+                monIcon.title=`${newState}`
+            }
+            monetizationState = newState
+          }
+          if (!icon || icon == 'question') {
+            document.getElementById('state').textContent 
+              = newState || document.monetization.state
+          }
+          else {
+            document.getElementById('state').textContent =''
+          }
+        }
+    
+        if (document.monetization) {
+          document.monetization.addEventListener('monetizationstop', showMonetizationState)
+          document.monetization.addEventListener('monetizationpending', showMonetizationState)
+          document.monetization.addEventListener('monetizationstart', showMonetizationState)
+        }
+
+        let player
+        document.addEventListener('DOMContentLoaded', (event) => {
+          makePlayer()
+        })
+
+        function whenEnterPaymail() {
+            const enteredPayTo = document.getElementById('payoutaddress').value
+            if (!enteredPayTo) {
+              showMonetizationState(`failure`)
+              showPayout(`Enter a paymail first!`)
+              document.getElementById('receiptLink').className="hide"
+              return false
+            } else {
+              showMonetizationState('starting')
+              showPayout(``)
+              document.getElementById('currency').textContent =''
+              document.getElementById('receiptLink').className=""
+            }
+
+            console.log(`show step 2`)
+            if (player) {
+              done = false
+              console.log(`playing video on exisiting player`)
+              playVideo()
+            } else {
+              console.log(`making player`)
+              makePlayer()
+            }
+          }
+  
+          function makePlayer() {
+            // 2. This code loads the IFrame Player API code asynchronously.
+            // var tag = document.createElement('script');
+            // tag.src = "https://www.youtube.com/iframe_api";
+            // var firstScriptTag = document.getElementsByTagName('script')[0];
+            // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            player = new Plyr('#player', {
+              autoplay:true,
+              ratio:'16:9',
+              youtube: {noCookie:true},
+//              clickToPlay: false
+            })
+            player.on('statechange', onPlayerStateChange)
+            player.poster = 'https://images.unsplash.com/photo-1533069027836-fa937181a8ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
+          }
+  
+          // -1 – unstarted
+          // 0 – ended
+          // 1 – playing
+          // 2 – paused
+          // 3 – buffering
+          // 5 – video cued
+          // YT.PlayerState.ENDED
+          // YT.PlayerState.PLAYING
+          // YT.PlayerState.PAUSED
+          // YT.PlayerState.BUFFERING
+          // YT.PlayerState.CUED
+          function onPlayerStateChange(event) {
+            if (event.detail.code == YT.PlayerState.PLAYING && done) {
+              stopVideo()
+            }
+            if (event.detail.code == YT.PlayerState.PLAYING && !done) {
+              monetizationStart()
+            }
+            if (event.detail.code == YT.PlayerState.ENDED) {
+              monetizationStop()
+            }
+            if (event.detail.code == YT.PlayerState.PAUSED) {
+              monetizationStop()
+            }
+          }
+          // use these to control video playing
+          function stopVideo() {
+            player.stop()
+            console.log('player stop')
+          }
+          function playVideo() {
+            player.play()
+            console.log('player play')
+          }
+  
+  ////////////////////////////////
+  
+        // window.addEventListener('load', () => {
+  
+          document.getElementById('payoutaddress').value = payTo
+          if (!document.monetization) {
+            document.getElementById('state').textContent = 'Not enabled in browser'
+          } else {
+            showMonetizationState('stopped')
+          }
+    
+          const stopButton = document.getElementById('stop-button')
+          const startButton = document.getElementById('start-button')
+          const btnSubmitPaymail = document.getElementById('submit-paymail')
+          const monetizationTag = document.querySelector('meta[name="monetization"]')
+  
+          let monTimer = null
+          let done = false
+  
+          function showPayout(payoutDescription, payment) {
+            if (!payoutDescription) {
+              document.getElementById('cardpayout').className="card border-0 hide"
+              document.getElementById('currency').textContent = ''
+            } else {
+              document.getElementById('cardpayout').className="card border-0"
+            }
+            document.getElementById('payout').textContent
+                = payoutDescription
+            if (payment) {
+              document.getElementById('receiptLink').className=""
+              document.getElementById('receiptLink').href
+              = `https://whatsonchain.com/tx/${payment.txid}`
+            } else {
+              document.getElementById('receiptLink').className="hide"
+            }
+          }
+          
+          function stopTimer() {
+            clearInterval(monTimer)
+            monTimer = null
+          }
+
+          async function stopSession(stopImmediately, payment) {
+            let pay = payment
+            stopTimer()
+            if (stopImmediately === false) {
+              // this does a final spend and may loop
+              pay = await onSendMoney('stop')
+            }
+            console.log(pay)
+            if (pay && pay.returnResult && pay.returnResult === 'failure') {
+              showPayout(`Sorry! Payment failed. ${pay.resultDescription}`)
+              stopUI('failure')
+              return 'failure'
+            } else if (pay && pay.txid) {
+                showPayout(`You got paid!`, pay)
+                stopUI('success')
+                return 'success'
+            }
+            if (!pay) {
+              stopVideo()
+            }
+            return null
+          }
+
+          btnSubmitPaymail.addEventListener('click', async () => {
+            await whenEnterPaymail()            
+          })
+  
+          stopButton.addEventListener('click', async () => {
+            await monetizationStop()
+          })
+  
+          async function monetizationStop() {
+            const result = await stopSession(false)
+            stopUI(result)
+          }
+  
+          function stopUI(reason) {
+            stopVideo()
+            showMonetizationState(reason)
+            stopButton.disabled = true
+            startButton.disabled = false
+          }
+  
+          function startSession() {
+            const enteredPayTo = document.getElementById('payoutaddress').value
+            total = 0
+            if (!enteredPayTo) {
+              showMonetizationState(`Enter a paymail first!`)
+              return false
+            } else {
+              payTo = enteredPayTo
+              showMonetizationState(`starting`)
+              showTotal('nothing yet')
+              showPayout('')
+              sessionId = create_UUID()
+              console.log(`session ${sessionId}`)
+              if (monTimer === null) {
+                monTimer = setInterval(onSendMoney, 3000)
+              }
+              playVideo()
+              return true
+            }
+          }
+    
+          startButton.addEventListener('click', () => {
+            monetizationStart()
+          })
+  
+          function monetizationStart() {
+            if (startSession()) {
+              stopButton.disabled = false
+              startButton.disabled = true
+            }
+          }
+  
+          async function onSendMoney(method) {
+            if (done) {
+              console.log(`done`)
+              stopTimer()
+              return
+            }
+            // authorize faucet to send money to user
+            const dto = {
+              session: sessionId,
+              payTo: payTo
+            }
+            const methodToCall = method || 'progress'
+            try {
+              const response = await fetch(`${faucet_url}${methodToCall}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(dto)
+              })
+              const data = await response.json()
+              console.log(data)
+              if (data.statusCode && data.statusCode === 500) {
+                done = true
+                stopTimer()
+                stopVideo()
+                await stopSession(true, data)
+              }
+              if (data.returnResult && data.returnResult === 'success') {
+                await stopSession(true, data)
+              } else {
+                if (data.returnResult && data.returnResult === 'failure') {
+                  await stopSession(true, data)
+                } else {
+                  if (data.amount) sendAmount = data.amount
+                  await whenReverseMonetizationProgress(data)
+                }
+              }
+              return data
+            }
+            catch (err) {
+              console.error(err)
+              await stopSession(true)
+            }
+          }
+
+          function showTotal(formattedCents) {
+            document.getElementById('total').textContent = formattedCents
+          }
+  
+          async function whenReverseMonetizationProgress(payment) {
+            // initialize currency and scale on first progress event
+            console.log(payment)
+            console.log(total)
+            if (payment && payment.amount && total >= 0) {
+              scale = payment.assetScale || 8
+              document.getElementById('currency').textContent 
+                 = 'cents' //payment.assetCode || 'BSV'
+            }
+            showMonetizationState(payment.returnResult)
+            // amount is the total cumulative amount
+            total = Math.max(Number(payment.amount)-FEE, 0)
+            // const formatted = (total * Math.pow(10, -scale)).toFixed(scale)
+            if (isNaN(total)) {
+              showTotal('nothing yet')
+            } else {
+              const formattedCents = total / SAT_PER_CENT
+              showTotal(formattedCents)
+            }
+            if (payment.amount > MAX_SPEND) {
+              await onSendMoney('stop')
+            }
+          }
+  
+        // })
+
+    </script>
+  
+  </body>
