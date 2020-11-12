@@ -17,33 +17,14 @@
       }
     </style>
 
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
-    <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
-    <script>
-      let player = null
-
-      document.addEventListener('DOMContentLoaded', (event) => {
-        makePlayer()
-        //moneystreamVideo.whenLoaded()
-      })
-
-    </script>
-
   </head>
   <body>
     <!-- <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component> -->
-    <moneystream-dash debug="false" show-controls="true">
-    </moneystream-dash>
-    <!-- <moneystream-video id="moneystreamVideo"></moneystream-video> -->
+    <!-- <moneystream-dash debug="false" show-controls="true">
+    </moneystream-dash> -->
+    <moneystream-video id="moneystreamVideo"></moneystream-video>
 
-    <div class="colvids" style="background-color:white;">
-      <div id="player" 
-        data-plyr-provider="youtube" 
-        data-plyr-embed-id="qB6I9Zk-7zY"
-      ></div>
-    </div>
-
-    <script>
+    <!-- <script>
 
       function makePlayer() {
         // 2. This code loads the IFrame Player API code asynchronously.
@@ -60,7 +41,7 @@
         player.poster = 'https://images.unsplash.com/photo-1533069027836-fa937181a8ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
       }
 
-    </script>
+    </script> -->
 
   </body>
 </html>

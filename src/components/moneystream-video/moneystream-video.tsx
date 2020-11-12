@@ -1,5 +1,4 @@
-import { Component, Host, h, State, Listen } from '@stencil/core';
-import Plyr from "plyr/dist/plyr.polyfilled"
+import { Component, Host, h, State } from '@stencil/core';
 
 @Component({
   tag: 'moneystream-video',
@@ -39,16 +38,10 @@ export class MoneystreamVideo {
   // }
 
 makePlayer() {
-    this.player = new Plyr('#moneystream-player', {
-      autoplay:false,
-      ratio:'16:9',
-      youtube: {noCookie:true},
-      // clickToPlay: false
-    })
     //this.player.on('statechange', onPlayerStateChange)
-    this.player.poster = 'https://images.unsplash.com/photo-1533069027836-fa937181a8ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
-    console.log(this.player)
-    this.videoMessage = `Player ready`
+    // this.player.poster = 'https://images.unsplash.com/photo-1533069027836-fa937181a8ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
+    // console.log(this.player)
+    //this.videoMessage = `Player ready`
   }
 
   playVideo() {
@@ -58,15 +51,29 @@ makePlayer() {
 
   render() {
     return (
-      // <Host>
+      <Host>
+        <moneystream-dash></moneystream-dash>
           <div class="colvids">
             {this.videoMessage}
-            <div id="moneystream-player" 
-              data-plyr-provider="youtube" 
-              data-plyr-embed-id="qB6I9Zk-7zY"
-            ></div>
+            <vime-player controls>
+        <vime-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+          {/* These are passed directly to the underlying HTML5 `<video>` element. */}
+          {/* Why `data-src`? Lazy loading, you can always use `src` if you prefer.  */}
+          <source 
+            data-src="https://media.vimejs.com/720p.mp4" 
+            type="video/mp4" 
+          />
+          <track 
+            default 
+            kind="subtitles" 
+            src="https://media.vimejs.com/subs/english.vtt" 
+            srclang="en" 
+            label="English" 
+          />
+        </vime-video> 
+      </vime-player>
           </div>
-      // </Host>
+      </Host>
     )
   }
 
