@@ -25,8 +25,20 @@ export class MoneystreamDash {
   }
 
   componentWillLoad() {
+    this.addFont()
     checkExtension()
     getExchange().then(exchange => {this.exchange = exchange})
+  }
+
+  addFont() {
+    const fontDeclarationElement: HTMLStyleElement = document.createElement('style');
+    fontDeclarationElement.id="moneystreamFont"
+    fontDeclarationElement.textContent +=
+      '@font-face{font-family:technikusregular;'
+      +'src:url(build/technikus-regular-webfont.woff2) format("woff2"),'
+      +'url(build/technikus-regular-webfont.woff) format("woff");'
+      +'}'
+    document.head.append(fontDeclarationElement)
   }
 
   updateAmount() {
