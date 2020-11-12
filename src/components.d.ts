@@ -9,8 +9,11 @@ export namespace Components {
     interface MoneystreamDash {
         "debug": boolean;
         "showControls": boolean;
+        "start": () => Promise<void>;
+        "stop": () => Promise<void>;
     }
     interface MoneystreamVideo {
+        "videoId": any;
     }
     interface MyComponent {
         /**
@@ -58,6 +61,7 @@ declare namespace LocalJSX {
         "showControls"?: boolean;
     }
     interface MoneystreamVideo {
+        "videoId"?: any;
     }
     interface MyComponent {
         /**

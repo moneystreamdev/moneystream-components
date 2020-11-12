@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Listen, Prop } from '@stencil/core'
+import { Component, Host, h, State, Listen, Prop, Method } from '@stencil/core'
 import { checkExtension, startMonetization, stopMonetization } from '../../js/moneystream_utils'
 
 @Component({
@@ -79,6 +79,11 @@ export class MoneystreamDash {
         return "moneystream-status-default"
     }
   }
+
+  @Method()
+  async start() { this.onStart() }
+  @Method()
+  async stop() { this.onStop() }
 
   onInfo = () => {
     checkExtension()
