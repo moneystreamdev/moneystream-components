@@ -1,4 +1,4 @@
-import { Component, Host, h, State, Listen, Prop, Method } from '@stencil/core'
+import { Component, Host, h, State, Listen, Prop, Method, Event, EventEmitter } from '@stencil/core'
 import { getExchange, convertSatoshisToUsd, 
   checkExtension, startMonetization, stopMonetization } from '../../js/moneystream_utils'
 
@@ -21,6 +21,16 @@ export class MoneystreamDash {
   @State() messages:string = ''
   @State() exchange: any
   @State() display_amount: number = 0
+
+  @Method()
+  async getStatus() {
+    return {
+      hasExtension: this.hasExtension,
+      extension: this.xtn,
+      monetizationstatus: this.monetizationstatus,
+      monetizationamount: this.monetizationamount
+    }
+  }
 
   logMessage = (msg) => {
     // console.log(msg)
@@ -52,6 +62,19 @@ export class MoneystreamDash {
     }
   }
 
+  @Event() monetizationStarted: EventEmitter<string>
+  monetizationStartedEmit(status: string) {
+    this.monetizationStarted.emit(status)
+  }
+  @Event() monetizationStopped: EventEmitter<string>
+  monetizationStoppedEmit(status: string) {
+    this.monetizationStopped.emit(status)
+  }
+  @Event() monetizationProgress: EventEmitter<any>
+  monetizationProgressEmit(ev: any) {
+    this.monetizationProgress.emit(ev)
+  }
+
   //Listen to message and process
   @Listen('message', { target: 'window' })
   messageHandler(event) {
@@ -78,6 +101,7 @@ export class MoneystreamDash {
     if (event.data.type == "monetizationstart") {
       this.logMessage(event.data)
       this.monetizationstatus = 'pending'
+      this.monetizationStartedEmit(this.monetizationstatus)
     }
     if (event.data.type == "monetizationprogress") {
       this.logMessage(event.data)
@@ -88,10 +112,15 @@ export class MoneystreamDash {
       } else {
           this.monetizationstatus = 'pending'
       }
+      this.monetizationProgressEmit({
+        status: this.monetizationstatus,
+        amount: this.monetizationamount
+      })
     }
     if (event.data.type == "monetizationstop") {
       this.logMessage(event.data)
       this.monetizationstatus = 'stop'
+      this.monetizationStoppedEmit(this.monetizationstatus)
     }
   }
 

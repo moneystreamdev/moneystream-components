@@ -8,12 +8,14 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MoneystreamDash {
         "debug": boolean;
+        "getStatus": () => Promise<{ hasExtension: boolean; extension: any; monetizationstatus: string; monetizationamount: number; }>;
         "payTo": string;
         "showControls": boolean;
         "start": () => Promise<void>;
         "stop": () => Promise<void>;
     }
     interface MoneystreamVideo {
+        "monetizationrequired": boolean;
         "payTo": string;
         "vid": string;
     }
@@ -60,10 +62,14 @@ declare global {
 declare namespace LocalJSX {
     interface MoneystreamDash {
         "debug"?: boolean;
+        "onMonetizationProgress"?: (event: CustomEvent<any>) => void;
+        "onMonetizationStarted"?: (event: CustomEvent<string>) => void;
+        "onMonetizationStopped"?: (event: CustomEvent<string>) => void;
         "payTo"?: string;
         "showControls"?: boolean;
     }
     interface MoneystreamVideo {
+        "monetizationrequired"?: boolean;
         "payTo"?: string;
         "vid"?: string;
     }

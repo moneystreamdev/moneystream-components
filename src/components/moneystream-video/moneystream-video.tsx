@@ -1,4 +1,5 @@
 import { Component, Host, h, State, Prop } from '@stencil/core';
+import { Listen } from '@vime/core/dist/types/stencil-public-runtime';
 
 @Component({
   tag: 'moneystream-video',
@@ -13,11 +14,36 @@ export class MoneystreamVideo {
   @Prop() vid: string = undefined
   // required
   @Prop() payTo: string = 'fullcycle@moneybutton.com'
+  @Prop() monetizationrequired: boolean = true
+
+  @Listen('monetizationStarted')
+  monetizationStartedHandler(event) {
+    console.log(event)
+  }
+  @Listen('monetizationStopped')
+  monetizationStoppedHandler(event) {
+    console.log(event)
+    this.pauseVideo()
+  }
+  @Listen('monetizationProgress')
+  monetizationProgressHandler(event) {
+    console.log(event)
+  }
 
   private onPlayingChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
       console.log(`playing`,event.detail)
-      this.moneystream.start()
+      if (this.monetizationrequired) {
+        this.moneystream.getStatus().then(
+          status => {
+            if (status.hasExtension === true) {
+              this.moneystream.start()
+            } else {
+              this.pauseVideo()
+            }
+          }
+        )
+      }
     }
   }
   private onPausedChange(event: CustomEvent<boolean>) {
@@ -27,9 +53,9 @@ export class MoneystreamVideo {
     }
   }
 
-  playVideo() {
-    this.player.play()
-  }
+  // playVideo() {
+  //   this.player.play()
+  // }
   pauseVideo() {
     this.player.pause()
   }
