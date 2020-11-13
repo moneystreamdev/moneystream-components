@@ -10,6 +10,8 @@ import { getExchange, convertSatoshisToUsd,
 export class MoneystreamDash {
   @Prop() debug: boolean = false
   @Prop() showControls: boolean = false
+  // required
+  @Prop() payTo: string = 'fullcycle@moneybutton.com'
   // null/pending/monetized/stop
   @State() monetizationstatus:string = null
   // counts up, funding amount for the ongoing channel
@@ -114,7 +116,7 @@ export class MoneystreamDash {
     checkExtension()
   }
   onStart = () => {
-      startMonetization(window.location.href,'fullcycle@moneybutton.com')
+      startMonetization(window.location.href, this.payTo)
   }
   onStop = () => {
       stopMonetization()

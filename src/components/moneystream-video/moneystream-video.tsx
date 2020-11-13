@@ -11,6 +11,8 @@ export class MoneystreamVideo {
   @State() videoMessage: string = ''
   // required to be set on the instance
   @Prop() vid: string = undefined
+  // required
+  @Prop() payTo: string = 'fullcycle@moneybutton.com'
 
   private onPlayingChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
@@ -38,6 +40,7 @@ export class MoneystreamVideo {
           <div class="colvids">
             <div class="right">
               <moneystream-dash id="moneystream"
+              payTo = {this.payTo}
               ref={(el) => { this.moneystream = el }}
               ></moneystream-dash>
             </div>
