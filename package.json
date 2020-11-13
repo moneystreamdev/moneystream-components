@@ -1,6 +1,6 @@
 {
   "name": "moneystream-components",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "MoneyStream Web Components",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
