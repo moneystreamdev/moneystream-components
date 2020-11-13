@@ -18,7 +18,7 @@
 .moneystream{
   border-radius: 4px;
   display:inline-block;
-  font-family: 'technikusregular';
+  font-family: technikusregular, Courier, monospace;
   font-style: italic;
   font-size: 28px;
   color: white;
@@ -71,6 +71,20 @@ a.moneystream:link, a.moneystream:visited {
   color: white;
   background-color: black;
   padding: 8px;
+}
+
+.moneystream-install{
+  opacity: 1;
+  transition: opacity 3s;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 12px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  font-weight: 800;
+  color: greenyellow;
+  background-color: black;
+  padding: 6px 6px 6px 6px;
 }
 
 .moneystream-btn {

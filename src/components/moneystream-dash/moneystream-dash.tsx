@@ -15,6 +15,7 @@ export class MoneystreamDash {
   // counts up, funding amount for the ongoing channel
   @State() monetizationamount:number = 0
   @State() xtn:any = {name:"MoneyStream",version:"0.0.0",balanceSatoshis:0}
+  @State() hasExtension: boolean = false
   @State() messages:string = ''
   @State() exchange: any
   @State() display_amount: number = 0
@@ -60,6 +61,7 @@ export class MoneystreamDash {
       this.logMessage(event.data.message)
     }
     if (event.data.command == "info") {
+      this.hasExtension = true
       this.xtn = event.data.message
       this.updateAmount()
     } else {
@@ -79,7 +81,7 @@ export class MoneystreamDash {
       this.logMessage(event.data)
       this.monetizationamount += parseInt(event.data.detail.amount,10)
       this.updateAmount()
-      if (this.monetizationamount > 200) {
+      if (this.monetizationamount > 400) {
           this.monetizationstatus = 'monetized'
       } else {
           this.monetizationstatus = 'pending'
@@ -122,6 +124,7 @@ export class MoneystreamDash {
     return (
       <Host>
         <div class="moneystream">
+          <a class={this.hasExtension ? "moneystream-hidden": "moneystream-install"} href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionName" title={`Click here to install MoneyStream`}>Install</span></a>
           <a class="moneystream" href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionName" title={`${this.xtn.name} v${this.xtn.version}`}>{this.xtn.name}</span></a>
           <span id="txtExtensionVersion" class="moneystream-hidden">{this.xtn.version}</span>
           <span id="txtExtensionStatus" class={this.getStatusClass()} title="MoneyStream Status">&#8621;</span>
