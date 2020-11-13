@@ -1,20 +1,18 @@
-import { Component, Host, h, State, Prop } from '@stencil/core';
-import { Listen } from '@vime/core/dist/types/stencil-public-runtime';
+import { Component, Host, h, Listen } from '@stencil/core';
+import { Prop, State } from '@vime/core/dist/types/stencil-public-runtime';
 
 @Component({
-  tag: 'moneystream-video',
-  styleUrl: 'moneystream-video.css',
+  tag: 'moneystream-audio',
+  styleUrl: 'moneystream-audio.css',
   shadow: true,
 })
-export class MoneystreamVideo {
-  private player!: HTMLVimePlayerElement
-  private moneystream!: any
-  @State() videoMessage: string = ''
+export class MoneystreamAudio {
   // required to be set on the instance
-  @Prop() vid: string = undefined
-  // required
-  @Prop() payTo: string = 'fullcycle@moneybutton.com'
+  @Prop() src: string = undefined
+  @Prop() payTo: string
   @Prop() monetizationrequired: boolean = true
+  @State() moneystream: any
+  @State() player: any
 
   @Listen('monetizationStarted')
   monetizationStartedHandler(event) {
@@ -46,6 +44,7 @@ export class MoneystreamVideo {
       }
     }
   }
+
   private onPausedChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
       console.log(`paused`,event.detail)
@@ -53,9 +52,6 @@ export class MoneystreamVideo {
     }
   }
 
-  // playVideo() {
-  //   this.player.play()
-  // }
   pausePlayer() {
     this.player.pause()
   }
@@ -63,7 +59,7 @@ export class MoneystreamVideo {
   render() {
     return (
       <Host>
-          <div class="colvids">
+        <div class="colvids">
             <div class="right">
               <moneystream-dash id="moneystream"
               payTo = {this.payTo}
@@ -76,12 +72,15 @@ export class MoneystreamVideo {
                 onVPausedChange={this.onPausedChange.bind(this)}
                 ref={(el) => { this.player = el }}
               >
-                <vime-youtube videoId={this.vid} />
+                <vime-audio>
+                  <source data-src={this.src} type="audio/mp3" />
+                </vime-audio>
               </vime-player>
             </div>
           </div>
+
       </Host>
-    )
+    );
   }
 
 }

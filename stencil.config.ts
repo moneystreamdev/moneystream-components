@@ -21,7 +21,8 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
       copy: [
         { src: 'wmreverse.html', dest: 'wmreverse.html' },
-        { src: 'components/moneystream-dash/assets', dest: 'build' },
+        { src: 'components/moneystream-dash/assets', dest: 'assets' },
+        { src: 'components/moneystream-audio/assets', dest: 'assets' },
         { src: 'js', dest: 'build' }
       ]
     },

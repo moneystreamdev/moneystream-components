@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  color: white;
+  background-color: black;
+}
+
+.right {
+  text-align:right;
+}
+
+.colvids {
+  margin: 20px auto;
+  padding: 8px;
+  max-width: 500px;
+}

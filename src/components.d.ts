@@ -6,6 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface MoneystreamAudio {
+        "monetizationrequired": boolean;
+        "payTo": string;
+        "src": string;
+    }
     interface MoneystreamDash {
         "debug": boolean;
         "getStatus": () => Promise<{ hasExtension: boolean; extension: any; monetizationstatus: string; monetizationamount: number; }>;
@@ -35,6 +40,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLMoneystreamAudioElement extends Components.MoneystreamAudio, HTMLStencilElement {
+    }
+    var HTMLMoneystreamAudioElement: {
+        prototype: HTMLMoneystreamAudioElement;
+        new (): HTMLMoneystreamAudioElement;
+    };
     interface HTMLMoneystreamDashElement extends Components.MoneystreamDash, HTMLStencilElement {
     }
     var HTMLMoneystreamDashElement: {
@@ -54,12 +65,18 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "moneystream-audio": HTMLMoneystreamAudioElement;
         "moneystream-dash": HTMLMoneystreamDashElement;
         "moneystream-video": HTMLMoneystreamVideoElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface MoneystreamAudio {
+        "monetizationrequired"?: boolean;
+        "payTo"?: string;
+        "src"?: string;
+    }
     interface MoneystreamDash {
         "debug"?: boolean;
         "onMonetizationProgress"?: (event: CustomEvent<any>) => void;
@@ -88,6 +105,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "moneystream-audio": MoneystreamAudio;
         "moneystream-dash": MoneystreamDash;
         "moneystream-video": MoneystreamVideo;
         "my-component": MyComponent;
@@ -97,6 +115,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "moneystream-audio": LocalJSX.MoneystreamAudio & JSXBase.HTMLAttributes<HTMLMoneystreamAudioElement>;
             "moneystream-dash": LocalJSX.MoneystreamDash & JSXBase.HTMLAttributes<HTMLMoneystreamDashElement>;
             "moneystream-video": LocalJSX.MoneystreamVideo & JSXBase.HTMLAttributes<HTMLMoneystreamVideoElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
