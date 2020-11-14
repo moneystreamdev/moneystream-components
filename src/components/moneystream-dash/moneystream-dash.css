@@ -20,7 +20,7 @@
   display:inline-block;
   font-family: technikusregular, Courier, monospace;
   font-style: italic;
-  font-size: 28px;
+  font-size: 24px;
   color: white;
   background-color: black;
   padding: 8px 16px 8px 8px;
@@ -85,6 +85,12 @@ a.moneystream:link, a.moneystream:visited {
   color: greenyellow;
   background-color: black;
   padding: 6px 6px 6px 6px;
+}
+
+.moneystream-payto{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 28px;
+  padding: 2px;
 }
 
 .moneystream-btn {

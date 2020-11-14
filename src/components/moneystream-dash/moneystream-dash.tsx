@@ -1,6 +1,9 @@
 import { Component, Host, h, State, Listen, Prop, Method, Event, EventEmitter } from '@stencil/core'
+import semver from 'semver'
 import { getExchange, convertSatoshisToUsd, 
   checkExtension, startMonetization, stopMonetization } from '../../js/moneystream_utils'
+
+const MINIMUM_VERSION = "0.1.20"
 
 @Component({
   tag: 'moneystream-dash',
@@ -21,6 +24,12 @@ export class MoneystreamDash {
   @State() messages:string = ''
   @State() exchange: any
   @State() display_amount: number = 0
+
+  private showUpgrade() {
+    if (this.hasExtension === false) return false
+    if (this.xtn.version === "0.0.0") return false
+    return semver.lt(this.xtn.version, MINIMUM_VERSION)
+  }
 
   @Method()
   async getStatus() {
@@ -155,14 +164,17 @@ export class MoneystreamDash {
     return (
       <Host>
         <div class="moneystream">
-          <a class={this.hasExtension ? "moneystream-hidden": "moneystream-install"} href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionName" title={`Click here to install MoneyStream`}>Install</span></a>
-          <a class="moneystream" href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionName" title={`${this.xtn.name} v${this.xtn.version}`}>{this.xtn.name}</span></a>
-          <span id="txtExtensionVersion" class="moneystream-hidden">{this.xtn.version}</span>
-          <span id="txtExtensionStatus" class={this.getStatusClass()} title="MoneyStream Status">&#8621;</span>
-          <span id="txtExtensionBalance" class="moneystream-balance" title="MoneyStream Balance">{this.display_amount}</span>
-          <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onInfo}>&#x21BB;</button>
-          <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onStart}>&#x23F5;</button>
-          <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onStop}>&#x23F9;</button>
+          <div>
+            <a class={this.showUpgrade() ? "moneystream-install": "moneystream-hidden"} href="https://moneystreamdev.github.io/moneystream-project/docs/upgrade" target="_blank"><span id="txtExtensionUpgrade" title={`Your version is old. Click here to upgrade`}>Upgrade</span></a>
+            <a class={this.hasExtension ? "moneystream-hidden": "moneystream-install"} href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionInstall" title={`Click here to install MoneyStream`}>Install</span></a>
+            <a class="moneystream" href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionName" title={`${this.xtn.name} v${this.xtn.version}`}>{this.xtn.name}</span></a>
+            <span id="txtExtensionBalance" class="moneystream-balance" title="MoneyStream Balance">{this.display_amount}</span>
+            <span id="txtExtensionStatus" class={this.getStatusClass()} title={`MoneyStream Status`}>&#8621;</span>
+            <span id="txtPayTo" class="moneystream-payto" title={`moneystreaming to ${this.payTo}`}>&#9787;</span>
+            <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onInfo}>&#x21BB;</button>
+            <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onStart}>&#x23F5;</button>
+            <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onStop}>&#x23F9;</button>
+          </div>
         </div>
         <pre id='moneystream-messages' class={this.debug===false?'moneystream-hidden':''}>{this.messages}</pre>
       </Host>

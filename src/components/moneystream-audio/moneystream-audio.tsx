@@ -11,6 +11,8 @@ export class MoneystreamAudio {
   @Prop() src: string = undefined
   @Prop() payTo: string
   @Prop() monetizationrequired: boolean = true
+  @Prop() mediaTitle: string = ''
+  @Prop() mediaType: string = 'audio/mp3'
   @State() moneystream: any
   @State() player: any
 
@@ -66,6 +68,7 @@ export class MoneystreamAudio {
               ref={(el) => { this.moneystream = el }}
               ></moneystream-dash>
             </div>
+            <div>{this.mediaTitle}</div>
             <div>
               <vime-player controls
                 onVPlayingChange={this.onPlayingChange.bind(this)}
@@ -73,7 +76,7 @@ export class MoneystreamAudio {
                 ref={(el) => { this.player = el }}
               >
                 <vime-audio>
-                  <source data-src={this.src} type="audio/mp3" />
+                  <source data-src={this.src} type={this.mediaType} />
                 </vime-audio>
               </vime-player>
             </div>

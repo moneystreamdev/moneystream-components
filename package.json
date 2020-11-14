@@ -1,6 +1,6 @@
 {
   "name": "moneystream-components",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "MoneyStream Web Components",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "@stencil/core": "^2.0.1",
-    "@vime/core": "^4.6.0"
+    "@vime/core": "^4.6.0",
+    "semver": "^5.7.1"
   },
   "license": "MIT",
   "devDependencies": {

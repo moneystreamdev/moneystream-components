@@ -7,6 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MoneystreamAudio {
+        "mediaTitle": string;
+        "mediaType": string;
         "monetizationrequired": boolean;
         "payTo": string;
         "src": string;
@@ -73,6 +75,8 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MoneystreamAudio {
+        "mediaTitle"?: string;
+        "mediaType"?: string;
         "monetizationrequired"?: boolean;
         "payTo"?: string;
         "src"?: string;
