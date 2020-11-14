@@ -9,7 +9,7 @@ import { Prop, State } from '@vime/core/dist/types/stencil-public-runtime';
 export class MoneystreamAudio {
   // required to be set on the instance
   @Prop() src: string = undefined
-  @Prop() payTo: string
+  @Prop() payto: string
   @Prop() monetizationrequired: boolean = true
   @Prop() mediaTitle: string = ''
   @Prop() mediaType: string = 'audio/mp3'
@@ -64,7 +64,7 @@ export class MoneystreamAudio {
         <div class="colvids">
             <div class="right">
               <moneystream-dash id="moneystream"
-              payTo = {this.payTo}
+              payto = {this.payto}
               ref={(el) => { this.moneystream = el }}
               ></moneystream-dash>
             </div>

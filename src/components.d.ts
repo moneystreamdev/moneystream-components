@@ -10,20 +10,20 @@ export namespace Components {
         "mediaTitle": string;
         "mediaType": string;
         "monetizationrequired": boolean;
-        "payTo": string;
+        "payto": string;
         "src": string;
     }
     interface MoneystreamDash {
         "debug": boolean;
         "getStatus": () => Promise<{ hasExtension: boolean; extension: any; monetizationstatus: string; monetizationamount: number; }>;
-        "payTo": string;
+        "payto": string;
         "showControls": boolean;
         "start": () => Promise<void>;
         "stop": () => Promise<void>;
     }
     interface MoneystreamVideo {
         "monetizationrequired": boolean;
-        "payTo": string;
+        "payto": string;
         "vid": string;
     }
     interface MyComponent {
@@ -78,7 +78,7 @@ declare namespace LocalJSX {
         "mediaTitle"?: string;
         "mediaType"?: string;
         "monetizationrequired"?: boolean;
-        "payTo"?: string;
+        "payto"?: string;
         "src"?: string;
     }
     interface MoneystreamDash {
@@ -86,12 +86,12 @@ declare namespace LocalJSX {
         "onMonetizationProgress"?: (event: CustomEvent<any>) => void;
         "onMonetizationStarted"?: (event: CustomEvent<string>) => void;
         "onMonetizationStopped"?: (event: CustomEvent<string>) => void;
-        "payTo"?: string;
+        "payto"?: string;
         "showControls"?: boolean;
     }
     interface MoneystreamVideo {
         "monetizationrequired"?: boolean;
-        "payTo"?: string;
+        "payto"?: string;
         "vid"?: string;
     }
     interface MyComponent {

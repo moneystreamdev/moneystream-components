@@ -14,7 +14,7 @@ export class MoneystreamDash {
   @Prop() debug: boolean = false
   @Prop() showControls: boolean = false
   // required
-  @Prop() payTo: string = 'fullcycle@moneybutton.com'
+  @Prop() payto: string = 'fullcycle@moneybutton.com'
   // null/pending/monetized/stop
   @State() monetizationstatus:string = null
   // counts up, funding amount for the ongoing channel
@@ -154,7 +154,7 @@ export class MoneystreamDash {
     checkExtension()
   }
   onStart = () => {
-      startMonetization(window.location.href, this.payTo)
+      startMonetization(window.location.href, this.payto)
   }
   onStop = () => {
       stopMonetization()
@@ -170,7 +170,7 @@ export class MoneystreamDash {
             <a class="moneystream" href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionName" title={`${this.xtn.name} v${this.xtn.version}`}>{this.xtn.name}</span></a>
             <span id="txtExtensionBalance" class="moneystream-balance" title="MoneyStream Balance">{this.display_amount}</span>
             <span id="txtExtensionStatus" class={this.getStatusClass()} title={`MoneyStream Status`}>&#8621;</span>
-            <span id="txtPayTo" class="moneystream-payto" title={`moneystreaming to ${this.payTo}`}>&#9787;</span>
+            <span id="txtPayTo" class="moneystream-payto" title={`moneystreaming to ${this.payto}`}>&#9787;</span>
             <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onInfo}>&#x21BB;</button>
             <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onStart}>&#x23F5;</button>
             <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onStop}>&#x23F9;</button>

@@ -13,7 +13,7 @@ export class MoneystreamVideo {
   // required to be set on the instance
   @Prop() vid: string = undefined
   // required
-  @Prop() payTo: string = 'fullcycle@moneybutton.com'
+  @Prop() payto: string = 'fullcycle@moneybutton.com'
   @Prop() monetizationrequired: boolean = true
 
   @Listen('monetizationStarted')
@@ -66,7 +66,7 @@ export class MoneystreamVideo {
           <div class="colvids">
             <div class="right">
               <moneystream-dash id="moneystream"
-              payTo = {this.payTo}
+              payto = {this.payto}
               ref={(el) => { this.moneystream = el }}
               ></moneystream-dash>
             </div>
