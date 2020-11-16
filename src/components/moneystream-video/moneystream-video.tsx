@@ -16,7 +16,10 @@ export class MoneystreamVideo {
   @Prop() type: string = "video/mp4"
   // required
   @Prop() payto: string = 'fullcycle@moneybutton.com'
-  @Prop() monetizationrequired: boolean = true
+  // monetizationstrategy = "required|none"
+  @Prop() monetizationstrategy: string = 'required'
+  // moneystreamdisplay = "show|hide|hidden"
+  @Prop() moneystreamdisplay: string = 'show'
   @State() videoMessage: string = ''
 
   @Listen('monetizationStarted')
@@ -36,7 +39,7 @@ export class MoneystreamVideo {
   private onPlayingChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
       console.log(`playing`,event.detail)
-      if (this.monetizationrequired) {
+      if (this.monetizationstrategy === 'required') {
         this.moneystream.getStatus().then(
           status => {
             if (status.hasExtension === true) {
@@ -67,7 +70,7 @@ export class MoneystreamVideo {
     return (
       <Host>
           <div class="colvids">
-            <div class="right">
+            <div class={this.moneystreamdisplay === 'hide' || this.moneystreamdisplay === 'hidden' ? 'hidden':'right'}>
               <moneystream-dash id="moneystream"
               payto = {this.payto}
               ref={(el) => { this.moneystream = el }}

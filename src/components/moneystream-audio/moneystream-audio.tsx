@@ -10,7 +10,10 @@ export class MoneystreamAudio {
   // required to be set on the instance
   @Prop() src: string = undefined
   @Prop() payto: string
-  @Prop() monetizationrequired: boolean = true
+  // monetizationstrategy = "required|none"
+  @Prop() monetizationstrategy: string = 'required'
+  // moneystreamdisplay = "show|hide|hidden"
+  @Prop() moneystreamdisplay: string = 'show'
   @Prop() mediaTitle: string = ''
   @Prop() mediaType: string = 'audio/mp3'
   @State() moneystream: any
@@ -33,7 +36,7 @@ export class MoneystreamAudio {
   private onPlayingChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
       console.log(`playing`,event.detail)
-      if (this.monetizationrequired) {
+      if (this.monetizationstrategy === 'required') {
         this.moneystream.getStatus().then(
           status => {
             if (status.hasExtension === true) {
@@ -62,7 +65,7 @@ export class MoneystreamAudio {
     return (
       <Host>
         <div class="colvids">
-            <div class="right">
+        <div class={this.moneystreamdisplay === 'hide' || this.moneystreamdisplay === 'hidden' ? 'hidden':'right'}>
               <moneystream-dash id="moneystream"
               payto = {this.payto}
               ref={(el) => { this.moneystream = el }}

@@ -12,7 +12,8 @@ export namespace Components {
     interface MoneystreamAudio {
         "mediaTitle": string;
         "mediaType": string;
-        "monetizationrequired": boolean;
+        "monetizationstrategy": string;
+        "moneystreamdisplay": string;
         "payto": string;
         "src": string;
     }
@@ -25,7 +26,8 @@ export namespace Components {
         "stop": () => Promise<void>;
     }
     interface MoneystreamVideo {
-        "monetizationrequired": boolean;
+        "monetizationstrategy": string;
+        "moneystreamdisplay": string;
         "payto": string;
         "provider": string;
         "type": string;
@@ -92,7 +94,8 @@ declare namespace LocalJSX {
     interface MoneystreamAudio {
         "mediaTitle"?: string;
         "mediaType"?: string;
-        "monetizationrequired"?: boolean;
+        "monetizationstrategy"?: string;
+        "moneystreamdisplay"?: string;
         "payto"?: string;
         "src"?: string;
     }
@@ -105,7 +108,8 @@ declare namespace LocalJSX {
         "showControls"?: boolean;
     }
     interface MoneystreamVideo {
-        "monetizationrequired"?: boolean;
+        "monetizationstrategy"?: string;
+        "moneystreamdisplay"?: string;
         "payto"?: string;
         "provider"?: string;
         "type"?: string;

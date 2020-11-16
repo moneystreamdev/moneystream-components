@@ -9,6 +9,10 @@
   background-color: black;
 }
 
+.hidden {
+  display: none;
+}
+
 .right {
   text-align:right;
 }
