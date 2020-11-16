@@ -6,6 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface MoneystreamAd {
+        "vid": string;
+    }
     interface MoneystreamAudio {
         "mediaTitle": string;
         "mediaType": string;
@@ -42,6 +45,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLMoneystreamAdElement extends Components.MoneystreamAd, HTMLStencilElement {
+    }
+    var HTMLMoneystreamAdElement: {
+        prototype: HTMLMoneystreamAdElement;
+        new (): HTMLMoneystreamAdElement;
+    };
     interface HTMLMoneystreamAudioElement extends Components.MoneystreamAudio, HTMLStencilElement {
     }
     var HTMLMoneystreamAudioElement: {
@@ -67,6 +76,7 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "moneystream-ad": HTMLMoneystreamAdElement;
         "moneystream-audio": HTMLMoneystreamAudioElement;
         "moneystream-dash": HTMLMoneystreamDashElement;
         "moneystream-video": HTMLMoneystreamVideoElement;
@@ -74,6 +84,9 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface MoneystreamAd {
+        "vid"?: string;
+    }
     interface MoneystreamAudio {
         "mediaTitle"?: string;
         "mediaType"?: string;
@@ -109,6 +122,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "moneystream-ad": MoneystreamAd;
         "moneystream-audio": MoneystreamAudio;
         "moneystream-dash": MoneystreamDash;
         "moneystream-video": MoneystreamVideo;
@@ -119,6 +133,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "moneystream-ad": LocalJSX.MoneystreamAd & JSXBase.HTMLAttributes<HTMLMoneystreamAdElement>;
             "moneystream-audio": LocalJSX.MoneystreamAudio & JSXBase.HTMLAttributes<HTMLMoneystreamAudioElement>;
             "moneystream-dash": LocalJSX.MoneystreamDash & JSXBase.HTMLAttributes<HTMLMoneystreamDashElement>;
             "moneystream-video": LocalJSX.MoneystreamVideo & JSXBase.HTMLAttributes<HTMLMoneystreamVideoElement>;
