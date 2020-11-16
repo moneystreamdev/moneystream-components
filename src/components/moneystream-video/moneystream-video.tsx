@@ -9,12 +9,15 @@ import { Listen } from '@vime/core/dist/types/stencil-public-runtime';
 export class MoneystreamVideo {
   private player!: HTMLVimePlayerElement
   private moneystream!: any
-  @State() videoMessage: string = ''
+  // youtube|file|vimeo
+  @Prop() provider:string = 'youtube'
   // required to be set on the instance
   @Prop() vid: string = undefined
+  @Prop() type: string = "video/mp4"
   // required
   @Prop() payto: string = 'fullcycle@moneybutton.com'
   @Prop() monetizationrequired: boolean = true
+  @State() videoMessage: string = ''
 
   @Listen('monetizationStarted')
   monetizationStartedHandler(event) {
@@ -76,7 +79,17 @@ export class MoneystreamVideo {
                 onVPausedChange={this.onPausedChange.bind(this)}
                 ref={(el) => { this.player = el }}
               >
-                <vime-youtube videoId={this.vid} />
+                { this.provider === "youtube" ? <vime-youtube videoId={this.vid} /> : null }
+                { this.provider === "vimeo" ? <vime-vimeo videoId={this.vid} /> : null }
+                { this.provider === "file" || this.provider === "video" ? 
+                  <vime-video>
+                    <source 
+                      data-src={this.vid} 
+                      type={this.type} 
+                    />
+                  </vime-video> 
+                  : null 
+                }
               </vime-player>
             </div>
           </div>

@@ -27,6 +27,8 @@ export namespace Components {
     interface MoneystreamVideo {
         "monetizationrequired": boolean;
         "payto": string;
+        "provider": string;
+        "type": string;
         "vid": string;
     }
     interface MyComponent {
@@ -105,6 +107,8 @@ declare namespace LocalJSX {
     interface MoneystreamVideo {
         "monetizationrequired"?: boolean;
         "payto"?: string;
+        "provider"?: string;
+        "type"?: string;
         "vid"?: string;
     }
     interface MyComponent {

@@ -49,7 +49,10 @@ export class MoneystreamDash {
   componentWillLoad() {
     this.addFont()
     checkExtension()
-    getExchange().then(exchange => {this.exchange = exchange})
+    getExchange().then(exchange => {
+      this.exchange = exchange
+      this.updateAmount()
+    })
   }
 
   addFont() {
@@ -168,7 +171,7 @@ export class MoneystreamDash {
             <a class={this.showUpgrade() ? "moneystream-install": "moneystream-hidden"} href="https://moneystreamdev.github.io/moneystream-project/docs/upgrade" target="_blank"><span id="txtExtensionUpgrade" title={`Your version is old. Click here to upgrade`}>Upgrade</span></a>
             <a class={this.hasExtension ? "moneystream-hidden": "moneystream-install"} href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionInstall" title={`Click here to install MoneyStream`}>Install</span></a>
             <a class="moneystream" href="https://moneystreamdev.github.io/moneystream-project/" target="_blank"><span id="txtExtensionName" title={`${this.xtn.name} v${this.xtn.version}`}>{this.xtn.name}</span></a>
-            <span id="txtExtensionBalance" class="moneystream-balance" title="MoneyStream Balance">{this.display_amount}</span>
+            <span id="txtExtensionBalance" class="moneystream-balance" title="MoneyStream balance export must be enabled in the extension to see the balance here">{this.display_amount}</span>
             <span id="txtExtensionStatus" class={this.getStatusClass()} title={`MoneyStream Status`}>&#8621;</span>
             <span id="txtPayTo" class="moneystream-payto" title={`moneystreaming to ${this.payto}`}>&#9787;</span>
             <button class={this.showControls===false?'moneystream-button moneystream-hidden':'moneystream-button'} onClick={this.onInfo}>&#x21BB;</button>
