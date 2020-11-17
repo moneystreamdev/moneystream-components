@@ -18,6 +18,7 @@ export class MoneystreamAudio {
   @Prop() mediaType: string = 'audio/mp3'
   @State() moneystream: any
   @State() player: any
+  private watchdog!: any
 
   @Listen('monetizationStarted')
   monetizationStartedHandler(event) {
@@ -32,6 +33,16 @@ export class MoneystreamAudio {
   monetizationProgressHandler(event) {
     console.log(event)
   }
+  @Listen('monetizationWatchdog')
+  monetizationWatchdog(event) {
+    console.log(`watchdog`,event)
+    if (event.detail === "stop") {
+      this.pausePlayer()
+    }
+    if (event.detail === "timeout") {
+      this.pausePlayer()
+    }
+  }
 
   private onPlayingChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
@@ -41,6 +52,7 @@ export class MoneystreamAudio {
           status => {
             if (status.hasExtension === true) {
               this.moneystream.start()
+              this.watchdog.start()
             } else {
               this.pausePlayer()
             }
@@ -54,6 +66,7 @@ export class MoneystreamAudio {
     if (event.detail === true) {
       console.log(`paused`,event.detail)
       this.moneystream.stop()
+      this.watchdog.stop()
     }
   }
 
@@ -64,27 +77,29 @@ export class MoneystreamAudio {
   render() {
     return (
       <Host>
+        <moneystream-watchdog
+          ref={(el) => {this.watchdog = el} }
+        ></moneystream-watchdog>
         <div class="colvids">
-        <div class={this.moneystreamdisplay === 'hide' || this.moneystreamdisplay === 'hidden' ? 'hidden':'right'}>
-              <moneystream-dash id="moneystream"
-              payto = {this.payto}
-              ref={(el) => { this.moneystream = el }}
-              ></moneystream-dash>
-            </div>
-            <div>{this.mediaTitle}</div>
-            <div>
-              <vime-player controls
-                onVPlayingChange={this.onPlayingChange.bind(this)}
-                onVPausedChange={this.onPausedChange.bind(this)}
-                ref={(el) => { this.player = el }}
-              >
-                <vime-audio>
-                  <source data-src={this.src} type={this.mediaType} />
-                </vime-audio>
-              </vime-player>
-            </div>
+          <div class={this.moneystreamdisplay === 'hide' || this.moneystreamdisplay === 'hidden' ? 'hidden':'right'}>
+                <moneystream-dash id="moneystream"
+                payto = {this.payto}
+                ref={(el) => { this.moneystream = el }}
+                ></moneystream-dash>
           </div>
-
+          <div>{this.mediaTitle}</div>
+          <div>
+            <vime-player controls
+              onVPlayingChange={this.onPlayingChange.bind(this)}
+              onVPausedChange={this.onPausedChange.bind(this)}
+              ref={(el) => { this.player = el }}
+            >
+              <vime-audio>
+                <source data-src={this.src} type={this.mediaType} />
+              </vime-audio>
+            </vime-player>
+          </div>
+        </div>
       </Host>
     );
   }
