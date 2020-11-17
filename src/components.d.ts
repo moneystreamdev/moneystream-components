@@ -33,19 +33,10 @@ export namespace Components {
         "type": string;
         "vid": string;
     }
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface MoneystreamWatchdog {
+        "interval": number;
+        "start": () => Promise<void>;
+        "stop": () => Promise<void>;
     }
 }
 declare global {
@@ -73,18 +64,18 @@ declare global {
         prototype: HTMLMoneystreamVideoElement;
         new (): HTMLMoneystreamVideoElement;
     };
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLMoneystreamWatchdogElement extends Components.MoneystreamWatchdog, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLMoneystreamWatchdogElement: {
+        prototype: HTMLMoneystreamWatchdogElement;
+        new (): HTMLMoneystreamWatchdogElement;
     };
     interface HTMLElementTagNameMap {
         "moneystream-ad": HTMLMoneystreamAdElement;
         "moneystream-audio": HTMLMoneystreamAudioElement;
         "moneystream-dash": HTMLMoneystreamDashElement;
         "moneystream-video": HTMLMoneystreamVideoElement;
-        "my-component": HTMLMyComponentElement;
+        "moneystream-watchdog": HTMLMoneystreamWatchdogElement;
     }
 }
 declare namespace LocalJSX {
@@ -115,26 +106,16 @@ declare namespace LocalJSX {
         "type"?: string;
         "vid"?: string;
     }
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface MoneystreamWatchdog {
+        "interval"?: number;
+        "onMonetizationWatchdog"?: (event: CustomEvent<string>) => void;
     }
     interface IntrinsicElements {
         "moneystream-ad": MoneystreamAd;
         "moneystream-audio": MoneystreamAudio;
         "moneystream-dash": MoneystreamDash;
         "moneystream-video": MoneystreamVideo;
-        "my-component": MyComponent;
+        "moneystream-watchdog": MoneystreamWatchdog;
     }
 }
 export { LocalJSX as JSX };
@@ -145,7 +126,7 @@ declare module "@stencil/core" {
             "moneystream-audio": LocalJSX.MoneystreamAudio & JSXBase.HTMLAttributes<HTMLMoneystreamAudioElement>;
             "moneystream-dash": LocalJSX.MoneystreamDash & JSXBase.HTMLAttributes<HTMLMoneystreamDashElement>;
             "moneystream-video": LocalJSX.MoneystreamVideo & JSXBase.HTMLAttributes<HTMLMoneystreamVideoElement>;
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "moneystream-watchdog": LocalJSX.MoneystreamWatchdog & JSXBase.HTMLAttributes<HTMLMoneystreamWatchdogElement>;
         }
     }
 }

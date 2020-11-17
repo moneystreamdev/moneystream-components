@@ -9,6 +9,7 @@ import { Listen } from '@vime/core/dist/types/stencil-public-runtime';
 export class MoneystreamVideo {
   private player!: HTMLVimePlayerElement
   private moneystream!: any
+  private watchdog!: any
   // youtube|file|vimeo
   @Prop() provider:string = 'youtube'
   // required to be set on the instance
@@ -35,6 +36,16 @@ export class MoneystreamVideo {
   monetizationProgressHandler(event) {
     console.log(event)
   }
+  @Listen('monetizationWatchdog')
+  monetizationWatchdog(event) {
+    console.log(`watchdog`,event)
+    if (event.detail === "stop") {
+      this.pausePlayer()
+    }
+    if (event.detail === "timeout") {
+      this.pausePlayer()
+    }
+  }
 
   private onPlayingChange(event: CustomEvent<boolean>) {
     if (event.detail === true) {
@@ -44,6 +55,7 @@ export class MoneystreamVideo {
           status => {
             if (status.hasExtension === true) {
               this.moneystream.start()
+              this.watchdog.start()
             } else {
               this.pausePlayer()
             }
@@ -56,6 +68,7 @@ export class MoneystreamVideo {
     if (event.detail === true) {
       console.log(`paused`,event.detail)
       this.moneystream.stop()
+      this.watchdog.stop()
     }
   }
 
@@ -69,6 +82,9 @@ export class MoneystreamVideo {
   render() {
     return (
       <Host>
+          <moneystream-watchdog
+            ref={(el) => {this.watchdog = el} }
+          ></moneystream-watchdog>
           <div class="colvids">
             <div class={this.moneystreamdisplay === 'hide' || this.moneystreamdisplay === 'hidden' ? 'hidden':'right'}>
               <moneystream-dash id="moneystream"
