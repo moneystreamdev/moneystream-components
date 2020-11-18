@@ -1,12 +1,4 @@
-//const xtn_laptop = 'egphknkmnjfgopfbahecbemahbphomeg'
-//const extensionId_LocalTesting = 'dnokejphlpljkikgfgmaiojlohadfdgo'
-//const extensionId_InStore = 'ggdmhmaklbcaeeolnppfehjkkihhnkfe'
-//const API = chrome
-//const available_xtn = [xtn_laptop,extensionId_LocalTesting,extensionId_InStore, extensionId_Ted]
-//let selected_xtn = xtn_laptop
 let sessionId = ''
-// betterMethod when working for firefox
-const betterMethod = true
 
 // this should log to contentscript
 function sendMessageExtension (payload) {
@@ -16,31 +8,31 @@ function sendMessageExtension (payload) {
     }, "*")
 }
 
+export async function sendCommand(command, data) {
+    const payload = {
+      command: command,
+      data: data
+    }
+    console.log(payload)
+    sendMessageExtension(payload)
+  }
+
 export async function startMonetization (url, paymail) {
     sessionId = create_UUID()
-    const payload = {
-        command: "start",
-        data:{
-            requestId:sessionId,
-            paymentPointer:paymail,
-            initiatingUrl: url,
-            serviceProviderUrl:''
-            }
-        }
-    sendMessageExtension(payload)
+    sendCommand("start",{
+        requestId:sessionId,
+        paymentPointer:paymail,
+        initiatingUrl: url,
+        serviceProviderUrl:''
+        })
 }
 
 export async function stopMonetization () {
-    const payload = {command: "stop"}
-    sendMessageExtension(payload)
+    sendCommand("stop")
 }
 
 export async function checkExtension () {
-    const isFirefox = typeof InstallTrigger !== 'undefined'
-    const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
-    const payload = {command: "info"}
-    console.log(payload)
-    sendMessageExtension(payload)
+    sendCommand("info")
 }
 
 export async function getExchange()  {
