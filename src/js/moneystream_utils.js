@@ -17,7 +17,9 @@ export async function sendCommand(command, data) {
     sendMessageExtension(payload)
   }
 
-export async function startMonetization (url, paymail) {
+export async function startMonetization (url, paymail, offer) {
+    // send offer, or combine into start
+    if (offer) sendCommand("offer", offer)
     sessionId = create_UUID()
     sendCommand("start",{
         requestId:sessionId,

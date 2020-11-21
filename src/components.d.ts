@@ -10,26 +10,36 @@ export namespace Components {
         "vid": string;
     }
     interface MoneystreamAudio {
-        "mediaTitle": string;
+        "duration": string;
         "mediaType": string;
         "monetizationstrategy": string;
         "moneystreamdisplay": string;
         "payto": string;
+        "price": number;
         "src": string;
+        "title": string;
     }
     interface MoneystreamDash {
         "debug": boolean;
         "getStatus": () => Promise<{ hasExtension: boolean; extension: any; monetizationstatus: string; monetizationamount: number; }>;
         "payto": string;
         "showControls": boolean;
-        "start": () => Promise<void>;
+        "start": (offer: any) => Promise<void>;
         "stop": () => Promise<void>;
     }
+    interface MoneystreamOffer {
+        "duration": string;
+        "price": string;
+        "title": string;
+    }
     interface MoneystreamVideo {
+        "duration": string;
         "monetizationstrategy": string;
         "moneystreamdisplay": string;
         "payto": string;
+        "price": number;
         "provider": string;
+        "title": string;
         "type": string;
         "vid": string;
     }
@@ -58,6 +68,12 @@ declare global {
         prototype: HTMLMoneystreamDashElement;
         new (): HTMLMoneystreamDashElement;
     };
+    interface HTMLMoneystreamOfferElement extends Components.MoneystreamOffer, HTMLStencilElement {
+    }
+    var HTMLMoneystreamOfferElement: {
+        prototype: HTMLMoneystreamOfferElement;
+        new (): HTMLMoneystreamOfferElement;
+    };
     interface HTMLMoneystreamVideoElement extends Components.MoneystreamVideo, HTMLStencilElement {
     }
     var HTMLMoneystreamVideoElement: {
@@ -74,6 +90,7 @@ declare global {
         "moneystream-ad": HTMLMoneystreamAdElement;
         "moneystream-audio": HTMLMoneystreamAudioElement;
         "moneystream-dash": HTMLMoneystreamDashElement;
+        "moneystream-offer": HTMLMoneystreamOfferElement;
         "moneystream-video": HTMLMoneystreamVideoElement;
         "moneystream-watchdog": HTMLMoneystreamWatchdogElement;
     }
@@ -83,12 +100,14 @@ declare namespace LocalJSX {
         "vid"?: string;
     }
     interface MoneystreamAudio {
-        "mediaTitle"?: string;
+        "duration"?: string;
         "mediaType"?: string;
         "monetizationstrategy"?: string;
         "moneystreamdisplay"?: string;
         "payto"?: string;
+        "price"?: number;
         "src"?: string;
+        "title"?: string;
     }
     interface MoneystreamDash {
         "debug"?: boolean;
@@ -98,11 +117,19 @@ declare namespace LocalJSX {
         "payto"?: string;
         "showControls"?: boolean;
     }
+    interface MoneystreamOffer {
+        "duration"?: string;
+        "price"?: string;
+        "title"?: string;
+    }
     interface MoneystreamVideo {
+        "duration"?: string;
         "monetizationstrategy"?: string;
         "moneystreamdisplay"?: string;
         "payto"?: string;
+        "price"?: number;
         "provider"?: string;
+        "title"?: string;
         "type"?: string;
         "vid"?: string;
     }
@@ -114,6 +141,7 @@ declare namespace LocalJSX {
         "moneystream-ad": MoneystreamAd;
         "moneystream-audio": MoneystreamAudio;
         "moneystream-dash": MoneystreamDash;
+        "moneystream-offer": MoneystreamOffer;
         "moneystream-video": MoneystreamVideo;
         "moneystream-watchdog": MoneystreamWatchdog;
     }
@@ -125,6 +153,7 @@ declare module "@stencil/core" {
             "moneystream-ad": LocalJSX.MoneystreamAd & JSXBase.HTMLAttributes<HTMLMoneystreamAdElement>;
             "moneystream-audio": LocalJSX.MoneystreamAudio & JSXBase.HTMLAttributes<HTMLMoneystreamAudioElement>;
             "moneystream-dash": LocalJSX.MoneystreamDash & JSXBase.HTMLAttributes<HTMLMoneystreamDashElement>;
+            "moneystream-offer": LocalJSX.MoneystreamOffer & JSXBase.HTMLAttributes<HTMLMoneystreamOfferElement>;
             "moneystream-video": LocalJSX.MoneystreamVideo & JSXBase.HTMLAttributes<HTMLMoneystreamVideoElement>;
             "moneystream-watchdog": LocalJSX.MoneystreamWatchdog & JSXBase.HTMLAttributes<HTMLMoneystreamWatchdogElement>;
         }

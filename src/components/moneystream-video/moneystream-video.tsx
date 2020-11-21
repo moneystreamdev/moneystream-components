@@ -15,6 +15,9 @@ export class MoneystreamVideo {
   // required to be set on the instance
   @Prop() vid: string = undefined
   @Prop() type: string = "video/mp4"
+  @Prop() title: string = ''
+  @Prop() duration: string
+  @Prop() price: number
   // required
   @Prop() payto: string = 'fullcycle@moneybutton.com'
   // monetizationstrategy = "required|none"
@@ -54,7 +57,15 @@ export class MoneystreamVideo {
         this.moneystream.getStatus().then(
           status => {
             if (status.hasExtension === true) {
-              this.moneystream.start()
+              // if amount && duration
+              const offer = {
+                session: window.location.href,
+                amount: this.price,
+                denomination: "cent",
+                rate: "total",
+                duration: this.duration
+              }
+              this.moneystream.start(offer)
               this.watchdog.start()
             } else {
               this.pausePlayer()
@@ -91,6 +102,9 @@ export class MoneystreamVideo {
               payto = {this.payto}
               ref={(el) => { this.moneystream = el }}
               ></moneystream-dash>
+            </div>
+            <div>
+              <moneystream-offer title={this.title} price={`${this.price}`} duration={this.duration}></moneystream-offer>
             </div>
             <div>
               <vime-player controls

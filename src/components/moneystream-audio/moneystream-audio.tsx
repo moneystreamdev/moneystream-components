@@ -10,11 +10,13 @@ export class MoneystreamAudio {
   // required to be set on the instance
   @Prop() src: string = undefined
   @Prop() payto: string
+  @Prop() duration: string
+  @Prop() price: number
   // monetizationstrategy = "required|none"
   @Prop() monetizationstrategy: string = 'required'
   // moneystreamdisplay = "show|hide|hidden"
   @Prop() moneystreamdisplay: string = 'show'
-  @Prop() mediaTitle: string = ''
+  @Prop() title: string = ''
   @Prop() mediaType: string = 'audio/mp3'
   @State() moneystream: any
   @State() player: any
@@ -51,7 +53,15 @@ export class MoneystreamAudio {
         this.moneystream.getStatus().then(
           status => {
             if (status.hasExtension === true) {
-              this.moneystream.start()
+              // if amount && duration
+              const offer = {
+                session: window.location.href,
+                amount: this.price,
+                denomination: "cent",
+                rate: "total",
+                duration: this.duration
+              }
+              this.moneystream.start(offer)
               this.watchdog.start()
             } else {
               this.pausePlayer()
@@ -87,7 +97,9 @@ export class MoneystreamAudio {
                 ref={(el) => { this.moneystream = el }}
                 ></moneystream-dash>
           </div>
-          <div>{this.mediaTitle}</div>
+          <div>
+              <moneystream-offer title={this.title} price={`${this.price}`} duration={this.duration}></moneystream-offer>
+            </div>
           <div>
             <vime-player controls
               onVPlayingChange={this.onPlayingChange.bind(this)}

@@ -8,6 +8,9 @@
     <script nomodule src="/build/moneystream-components.js"></script>
   </head>
   <body>
+
+    <!-- MoneyStream currently only supports one media per page!!! -->
+
     <!-- <moneystream-dash debug="false" show-controls="true">
     </moneystream-dash> -->
 
@@ -18,10 +21,18 @@
       vid="411652396" provider="vimeo" moneystreamdisplay='hide'></moneystream-video> -->
 
     <!-- <moneystream-video payto="145@moneybutton.com"
-      vid="https://media.vimejs.com/720p.mp4" provider="file" moneystreamdisplay='hide'></moneystream-video> -->
+      vid="https://media.vimejs.com/720p.mp4" provider="file"
+      title="MoneyStream Video Demo"
+      price="0.95"
+      duration="0:3:51"
+      moneystreamdisplay='show'></moneystream-video> -->
 
       <moneystream-audio payto="145@moneybutton.com"
-        src="/assets/audio.mp3"></moneystream-audio>
+        src="/assets/audio.mp3"
+        title="MoneyStream Audio Demo"
+        price="6"
+        duration="0:1:32"
+      ></moneystream-audio>
 
       <!-- <moneystream-ad payto="145@moneybutton.com"
       vid="qB6I9Zk-7zY"></moneystream-ad> -->

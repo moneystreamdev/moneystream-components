@@ -3,7 +3,7 @@ import semver from 'semver'
 import { getExchange, convertSatoshisToUsd, 
   checkExtension, startMonetization, stopMonetization } from '../../js/moneystream_utils'
 
-const MINIMUM_VERSION = "0.1.20"
+const MINIMUM_VERSION = "0.1.21"
 
 @Component({
   tag: 'moneystream-dash',
@@ -149,15 +149,15 @@ export class MoneystreamDash {
   }
 
   @Method()
-  async start() { this.onStart() }
+  async start(offer) { this.onStart(offer) }
   @Method()
   async stop() { this.onStop() }
 
   onInfo = () => {
     checkExtension()
   }
-  onStart = () => {
-      startMonetization(window.location.href, this.payto)
+  onStart = (offer) => {
+    startMonetization(window.location.href, this.payto, offer)
   }
   onStop = () => {
       stopMonetization()
