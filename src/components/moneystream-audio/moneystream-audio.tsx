@@ -16,7 +16,7 @@ export class MoneystreamAudio {
   @Prop() monetizationstrategy: string = 'required'
   // moneystreamdisplay = "show|hide|hidden"
   @Prop() moneystreamdisplay: string = 'show'
-  @Prop() title: string = ''
+  @Prop() mediatitle: string = ''
   @Prop() mediaType: string = 'audio/mp3'
   @State() moneystream: any
   @State() player: any
@@ -98,7 +98,7 @@ export class MoneystreamAudio {
                 ></moneystream-dash>
           </div>
           <div>
-              <moneystream-offer title={this.title} price={`${this.price}`} duration={this.duration}></moneystream-offer>
+              <moneystream-offer mediatitle={this.mediatitle} price={`${this.price}`} duration={this.duration}></moneystream-offer>
             </div>
           <div>
             <vime-player controls

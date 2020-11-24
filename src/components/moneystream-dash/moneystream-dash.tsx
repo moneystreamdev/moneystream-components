@@ -3,7 +3,7 @@ import semver from 'semver'
 import { getExchange, convertSatoshisToUsd, 
   checkExtension, startMonetization, stopMonetization } from '../../js/moneystream_utils'
 
-const MINIMUM_VERSION = "0.1.21"
+const MINIMUM_VERSION = "0.1.22"
 
 @Component({
   tag: 'moneystream-dash',
@@ -39,6 +39,11 @@ export class MoneystreamDash {
       monetizationstatus: this.monetizationstatus,
       monetizationamount: this.monetizationamount
     }
+  }
+
+  @Method()
+  async getExchange() {
+    return this.exchange
   }
 
   logMessage = (msg) => {

@@ -7,20 +7,24 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MoneystreamAd {
+        "duration": string;
+        "mediatitle": string;
+        "price": number;
         "vid": string;
     }
     interface MoneystreamAudio {
         "duration": string;
         "mediaType": string;
+        "mediatitle": string;
         "monetizationstrategy": string;
         "moneystreamdisplay": string;
         "payto": string;
         "price": number;
         "src": string;
-        "title": string;
     }
     interface MoneystreamDash {
         "debug": boolean;
+        "getExchange": () => Promise<any>;
         "getStatus": () => Promise<{ hasExtension: boolean; extension: any; monetizationstatus: string; monetizationamount: number; }>;
         "payto": string;
         "showControls": boolean;
@@ -29,17 +33,17 @@ export namespace Components {
     }
     interface MoneystreamOffer {
         "duration": string;
+        "mediatitle": string;
         "price": string;
-        "title": string;
     }
     interface MoneystreamVideo {
         "duration": string;
+        "mediatitle": string;
         "monetizationstrategy": string;
         "moneystreamdisplay": string;
         "payto": string;
         "price": number;
         "provider": string;
-        "title": string;
         "type": string;
         "vid": string;
     }
@@ -97,17 +101,20 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MoneystreamAd {
+        "duration"?: string;
+        "mediatitle"?: string;
+        "price"?: number;
         "vid"?: string;
     }
     interface MoneystreamAudio {
         "duration"?: string;
         "mediaType"?: string;
+        "mediatitle"?: string;
         "monetizationstrategy"?: string;
         "moneystreamdisplay"?: string;
         "payto"?: string;
         "price"?: number;
         "src"?: string;
-        "title"?: string;
     }
     interface MoneystreamDash {
         "debug"?: boolean;
@@ -119,17 +126,17 @@ declare namespace LocalJSX {
     }
     interface MoneystreamOffer {
         "duration"?: string;
+        "mediatitle"?: string;
         "price"?: string;
-        "title"?: string;
     }
     interface MoneystreamVideo {
         "duration"?: string;
+        "mediatitle"?: string;
         "monetizationstrategy"?: string;
         "moneystreamdisplay"?: string;
         "payto"?: string;
         "price"?: number;
         "provider"?: string;
-        "title"?: string;
         "type"?: string;
         "vid"?: string;
     }

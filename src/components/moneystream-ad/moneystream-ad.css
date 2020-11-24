@@ -22,3 +22,11 @@
   margin: 20px auto;
   max-width: 500px;
 }
+
+.ad-dash {
+  font-family: technikusregular, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-size: 14px;
+  color: white;
+  background-color: black;
+}

@@ -9,7 +9,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class MoneystreamOffer {
   @Prop() price: string = null
   @Prop() duration: string = null
-  @Prop() title: string = ''
+  @Prop() mediatitle: string = ''
 
   durationdescription() {
     if (!this.duration) return ''
@@ -25,7 +25,7 @@ export class MoneystreamOffer {
   render() {
     return (
       <Host>
-        <div class="offer"><span>{this.title}</span> / <span>&#162;</span> <span>{this.price}</span> / <span>{this.durationdescription()}</span></div>
+        <div class="offer"><span>{this.mediatitle}</span> | <span>{this.price}</span> <span>&#162;</span> | <span>{this.durationdescription()}</span></div>
       </Host>
     );
   }

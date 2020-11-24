@@ -15,7 +15,7 @@ export class MoneystreamVideo {
   // required to be set on the instance
   @Prop() vid: string = undefined
   @Prop() type: string = "video/mp4"
-  @Prop() title: string = ''
+  @Prop() mediatitle: string = ''
   @Prop() duration: string
   @Prop() price: number
   // required
@@ -104,7 +104,7 @@ export class MoneystreamVideo {
               ></moneystream-dash>
             </div>
             <div>
-              <moneystream-offer title={this.title} price={`${this.price}`} duration={this.duration}></moneystream-offer>
+              <moneystream-offer mediatitle={this.mediatitle} price={`${this.price}`} duration={this.duration}></moneystream-offer>
             </div>
             <div>
               <vime-player controls
