@@ -20,11 +20,17 @@ export class MoneystreamWatchdog {
   // last time a progress event was received
   lastProgress = null
 
-  @Method() async start() { this.startTimer() }
+  @Method() async start() { 
+    this.startTimer() 
+  }
   @Method() async stop() { this.stopTimer() }
 
   @Event() monetizationWatchdog: EventEmitter<string>
   monetizationChangedEmit(status: string) {
+    this.lastStarted = null
+    this.lastProgress = null
+    this.timer = null
+    this.counter = 0
     this.monetizationWatchdog.emit(status)
   }
 
@@ -34,7 +40,7 @@ export class MoneystreamWatchdog {
       // within this.interval seconds
       if (this.lastProgress || this.lastStarted) {
         const millisecelapsed = Date.now() - (this.lastProgress || this.lastStarted)
-        console.log(`watchdog`,millisecelapsed)
+        console.log(`watchdog`, millisecelapsed)
         if (millisecelapsed > this.interval*1000) {
           this.monetizationstatus = 'timeout'
           this.monetizationChangedEmit(this.monetizationstatus)

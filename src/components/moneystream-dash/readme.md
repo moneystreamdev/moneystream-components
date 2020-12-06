@@ -25,6 +25,16 @@
 
 ## Methods
 
+### `getExchange() => Promise<any>`
+
+
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
 ### `getStatus() => Promise<{ hasExtension: boolean; extension: any; monetizationstatus: string; monetizationamount: number; }>`
 
 
@@ -35,7 +45,7 @@ Type: `Promise<{ hasExtension: boolean; extension: any; monetizationstatus: stri
 
 
 
-### `start() => Promise<void>`
+### `start(offer: any) => Promise<void>`
 
 
 

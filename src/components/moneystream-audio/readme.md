@@ -9,11 +9,13 @@
 
 | Property               | Attribute              | Description | Type     | Default       |
 | ---------------------- | ---------------------- | ----------- | -------- | ------------- |
-| `mediaTitle`           | `media-title`          |             | `string` | `''`          |
+| `duration`             | `duration`             |             | `string` | `undefined`   |
 | `mediaType`            | `media-type`           |             | `string` | `'audio/mp3'` |
+| `mediatitle`           | `mediatitle`           |             | `string` | `''`          |
 | `monetizationstrategy` | `monetizationstrategy` |             | `string` | `'required'`  |
 | `moneystreamdisplay`   | `moneystreamdisplay`   |             | `string` | `'show'`      |
 | `payto`                | `payto`                |             | `string` | `undefined`   |
+| `price`                | `price`                |             | `number` | `undefined`   |
 | `src`                  | `src`                  |             | `string` | `undefined`   |
 
 
@@ -21,14 +23,18 @@
 
 ### Depends on
 
+- [moneystream-watchdog](../moneystream-watchdog)
 - [moneystream-dash](../moneystream-dash)
+- [moneystream-offer](../moneystream-offer)
 - vime-player
 - vime-audio
 
 ### Graph
 ```mermaid
 graph TD;
+  moneystream-audio --> moneystream-watchdog
   moneystream-audio --> moneystream-dash
+  moneystream-audio --> moneystream-offer
   moneystream-audio --> vime-player
   moneystream-audio --> vime-audio
   vime-audio --> vime-file

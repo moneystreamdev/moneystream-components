@@ -44,10 +44,11 @@
       }
       onClickOffer = () => {
         sendCommand('offer',{
-          session:'123',
+          session: window.location.href,
           amount: 25,
           denomination: 'cent',
-          rate: 'total'
+          rate: 'total',
+          duration: '0:2:34'
         })
       }
       onClickStart = () => {
@@ -59,9 +60,6 @@
           serviceProviderUrl:''
           })
       }
-      onClickStop = () => {
-        sendCommand('stop')
-      }
 
     </script>
   </head>
@@ -70,7 +68,7 @@
       <button onclick="onClick('info')">Info</button>
       <button onclick="onClickOffer()">Offer</button>
       <button onclick="onClickStart()">Start</button>
-      <button onclick="onClickStop()">Stop</button>
+      <button onclick="onClick('stop')">Stop</button>
     </div>
     <div id="results"></div>
   </body>

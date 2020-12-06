@@ -18,7 +18,7 @@ export class MoneystreamVideo {
   @Prop() mediatitle: string = ''
   @Prop() duration: string
   @Prop() price: number
-  // required
+  // TODO: make a required property!
   @Prop() payto: string = 'fullcycle@moneybutton.com'
   // monetizationstrategy = "required|none"
   @Prop() monetizationstrategy: string = 'required'

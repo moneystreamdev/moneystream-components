@@ -46,11 +46,13 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [moneystream-audio](../moneystream-audio)
  - [moneystream-video](../moneystream-video)
 
 ### Graph
 ```mermaid
 graph TD;
+  moneystream-audio --> moneystream-watchdog
   moneystream-video --> moneystream-watchdog
   style moneystream-watchdog fill:#f9f,stroke:#333,stroke-width:4px
 ```

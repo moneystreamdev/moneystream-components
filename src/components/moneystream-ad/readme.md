@@ -7,9 +7,12 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default |
-| -------- | --------- | ----------- | -------- | ------- |
-| `vid`    | `vid`     |             | `string` | `''`    |
+| Property     | Attribute    | Description | Type     | Default |
+| ------------ | ------------ | ----------- | -------- | ------- |
+| `duration`   | `duration`   |             | `string` | `''`    |
+| `mediatitle` | `mediatitle` |             | `string` | `''`    |
+| `price`      | `price`      |             | `number` | `0`     |
+| `vid`        | `vid`        |             | `string` | `''`    |
 
 
 ## Dependencies
@@ -17,6 +20,7 @@
 ### Depends on
 
 - [moneystream-dash](../moneystream-dash)
+- [moneystream-offer](../moneystream-offer)
 - vime-player
 - vime-youtube
 
@@ -24,6 +28,7 @@
 ```mermaid
 graph TD;
   moneystream-ad --> moneystream-dash
+  moneystream-ad --> moneystream-offer
   moneystream-ad --> vime-player
   moneystream-ad --> vime-youtube
   vime-youtube --> vime-embed
